@@ -1,110 +1,111 @@
+// Kelas POJO untuk ATK (kode A dan B)
 package Soal;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Collections;
 
-class Book {
-    private String title;
+class ATK implements Comparable<ATK> {
+    private String kodeBarang;
+    private String jenisBarang;
+    private String namaBarang;
+    private int stok;
 
-    public Book(String title) {
-        this.title = title;
+    public ATK(String kodeBarang, String jenisBarang, String namaBarang, int stok) {
+        this.kodeBarang = kodeBarang;
+        this.jenisBarang = jenisBarang;
+        this.namaBarang = namaBarang;
+        this.stok = stok;
     }
 
-    public String getTitle() {
-        return title;
+    // Getter dan setter
+    // ...
+
+    @Override
+    public int compareTo(ATK other) {
+        return this.kodeBarang.compareTo(other.kodeBarang);
+    }
+
+    @Override
+    public String toString() {
+        return "Kode Barang: " + kodeBarang + ", Jenis Barang: " + jenisBarang + ", Nama Barang: " + namaBarang + ", Stok: " + stok;
     }
 }
 
-class ReadingList<T extends Book> {
-    private ArrayList<T> books;
+// Kelas POJO untuk Bag (kode C)
+class Bag implements Comparable<Bag> {
+    private String kodeBarang;
+    private String jenisBarang;
+    private String namaBarang;
+    private int stok;
 
-    public ReadingList() {
-        this.books = new ArrayList<>();
+    public Bag(String kodeBarang, String jenisBarang, String namaBarang, int stok) {
+        this.kodeBarang = kodeBarang;
+        this.jenisBarang = jenisBarang;
+        this.namaBarang = namaBarang;
+        this.stok = stok;
     }
 
-    public void addBook(T book) {
-        books.add(book);
+    // Getter dan setter
+    // ...
+
+    @Override
+    public int compareTo(Bag other) {
+        return this.kodeBarang.compareTo(other.kodeBarang);
     }
 
-    public void displayBooks() {
-        if (books.isEmpty()) {
-            System.out.println("Reading list is empty.");
-        } else {
-            System.out.println("Reading List:");
-            for (int i = 0; i < books.size(); i++) {
-                System.out.println((i + 1) + ". " + books.get(i).getTitle());
-            }
-        }
-    }
-
-    public void switchToCompletedList(int index, ReadingList<T> completedList) {
-        if (index >= 0 && index < books.size()) {
-            T book = books.remove(index);
-            completedList.addBook(book);
-            System.out.println("Book moved to completed list.");
-        } else {
-            System.out.println("Invalid index.");
-        }
-    }
-
-    public void removeBook(int index) {
-        if (index >= 0 && index < books.size()) {
-            books.remove(index);
-            System.out.println("Book removed from reading list.");
-        } else {
-            System.out.println("Invalid index.");
-        }
+    @Override
+    public String toString() {
+        return "Kode Barang: " + kodeBarang + ", Jenis Barang: " + jenisBarang + ", Nama Barang: " + namaBarang + ", Stok: " + stok;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ReadingList<Book> readingList = new ReadingList<>();
-        ReadingList<Book> completedList = new ReadingList<>();
+        // Membuat objek untuk ATK (kode A dan B)
+        ATK atk1 = new ATK("A003", "Pensil", "Faber Castell 2B", 100);
+        ATK atk2 = new ATK("A001", "Pulpen", "Snowman Board Marker hitam", 50);
+        ATK atk3 = new ATK("A002", "Pensil", "Faber Castell 2H", 80);
 
-        while (true) {
-            System.out.println("\nMenu:");
-            System.out.println("1. Tambah Buku");
-            System.out.println("2. Tampilkan List Buku");
-            System.out.println("3. Pindahkan ke List Tamat");
-            System.out.println("4. List Buku Tamat");
-            System.out.println("5. Hapus Buku");
-            System.out.println("6. Exit");
-            System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+        // Membuat objek untuk Bag (kode C)
+        Bag bag1 = new Bag("C002", "Tas", "Tas Ransel Motif Galaxy", 20);
+        Bag bag2 = new Bag("C001", "Tempat Pensil", "Pencil Case Motif Kartun", 30);
 
-            switch (choice) {
-                case 1:
-                    System.out.print("Judul Buku: ");
-                    String title = scanner.nextLine();
-                    Book book = new Book(title);
-                    readingList.addBook(book);
-                    System.out.println("Buku ditambahkan ke List Baca.");
-                    break;
-                case 2:
-                    readingList.displayBooks();
-                    break;
-                case 3:
-                    System.out.print("Masukkan index buku untuk memindahkan: ");
-                    int index = scanner.nextInt();
-                    readingList.switchToCompletedList(index - 1, completedList);
-                    break;
-                case 4:
-                    completedList.displayBooks();
-                    break;
-                case 5:
-                    System.out.print("Masukkan index buku untuk menghapus: ");
-                    int removeIndex = scanner.nextInt();
-                    readingList.removeBook(removeIndex - 1);
-                    break;
-                case 6:
-                    System.out.println("Exiting...");
-                    System.exit(0);
-                default:
-                    System.out.println("Invalid choice. Tolong masukkan angka dari 1 sampai 6.");
-            }
+        // Membandingkan objek ATK
+        int resultATK1andATK2 = atk1.compareTo(atk2);
+        System.out.println("Hasil perbandingan ATK 1 dan ATK 2: " + resultATK1andATK2); // Output: Hasil perbandingan ATK 1 dan ATK 2: 1
+
+        // Membandingkan objek Bag
+        int resultBag1andBag2 = bag1.compareTo(bag2);
+        System.out.println("Hasil perbandingan Bag 1 dan Bag 2: " + resultBag1andBag2); // Output: Hasil perbandingan Bag 1 dan Bag 2: 1
+
+        // Menyimpan data ATK dalam ArrayList
+        ArrayList<ATK> atkList = new ArrayList<>();
+        atkList.add(atk1);
+        atkList.add(atk2);
+        atkList.add(atk3);
+
+        // Menyimpan data Bag dalam ArrayList
+        ArrayList<Bag> bagList = new ArrayList<>();
+        bagList.add(bag1);
+        bagList.add(bag2);
+
+        Collections.sort(atkList);
+
+        // Mengurutkan data Bag berdasarkan kode barang
+        Collections.sort(bagList);
+
+        // Menampilkan data ATK setelah diurutkan
+        System.out.println("Data ATK setelah diurutkan berdasarkan kode barang:");
+        for (ATK atk : atkList) {
+            System.out.println(atk);
+        }
+
+        System.out.println();
+
+        // Menampilkan data Bag setelah diurutkan
+        System.out.println("Data Bag setelah diurutkan berdasarkan kode barang:");
+        for (Bag bag : bagList) {
+            System.out.println(bag);
         }
     }
 }
